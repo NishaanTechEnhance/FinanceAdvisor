@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Advisor</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 800px;
+            height: 80%;
+            overflow-y: auto;
+        }
+        h1 {
+            color: #bb86fc;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 0.5rem;
+        }
+        input[type="text"], input[type="number"], textarea {
+            padding: 0.5rem;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+        input[type="submit"] {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #bb86fc;
+            color: #121212;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        input[type="submit"]:hover {
+            background-color: #3700b3;
+        }
+        .advice {
+            background-color: #2c2c2c;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+        }
+        .error {
+            color: #cf6679;
+            text-align: center;
+        }
+        pre {
+            white-space: pre-wrap;
+        }
+        .container {
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Financial Advisor</h1>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% elif financial_advice %}
+            <div class="advice">
+                <h2>Personalized Financial Advice</h2>
+                <pre>{{ financial_advice }}</pre>
+            </div>
+        {% else %}
+            <form action="/" method="post">
+                <label for="action">Action:</label>
+                <select id="action" name="action" required>
+                    <option value="fetch">Fetch Existing User Data</option>
+                    <option value="add">Add New User Data</option>
+                </select>
+                
+                <div id="fetchForm">
+                    <label for="user_id">User ID:</label>
+                    <input type="text" id="user_id" name="user_id">
+                </div>
+                
+                <div id="addForm" style="display: none;">
+                    <label for="user_id_add">User ID:</label>
+                    <input type="number" id="user_id_add" name="user_id_add">
+                    
+                    <label for="income">Income:</label>
+                    <input type="number" id="income" name="income">
+                    
+                    <label for="expenses">Expenses:</label>
+                    <input type="number" id="expenses" name="expenses">
+                    
+                    <label for="savings">Savings:</label>
+                    <input type="number" id="savings" name="savings">
+                    
+                    <label for="investments">Investments:</label>
+                    <input type="number" id="investments" name="investments">
+                    
+                    <label for="loans">Loans:</label>
+                    <input type="number" id="loans" name="loans">
+                    
+                    <label for="credit_card_debt">Credit Card Debt:</label>
+                    <input type="number" id="credit_card_debt" name="credit_card_debt">
+                </div>
+                
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+    </div>
+    <script>
+        document.getElementById('action').addEventListener('change', function() {
+            if (this.value === 'fetch') {
+                document.getElementById('fetchForm').style.display = 'block';
+                document.getElementById('addForm').style.display = 'none';
+            } else {
+                document.getElementById('fetchForm').style.display = 'none';
+                document.getElementById('addForm').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
